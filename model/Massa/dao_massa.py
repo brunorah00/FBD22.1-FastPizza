@@ -1,10 +1,10 @@
 from DataBase.connect import ConexaoBD
 
-from FastPizza.model.Borda.borda import Bordas
+from FastPizza.model.Massa.massa import Massas
 
 
-class BordaDao:
-    _TABLE_NAME = 'BORDAS'
+class MassaDao:
+    _TABLE_NAME = 'MASSAS'
 
     _INSERT_INTO = f'INSERT INTO {_TABLE_NAME}(tipo)' \
                    'values(%s, %s) RETURNING id'
@@ -17,65 +17,65 @@ class BordaDao:
     def __init__(self):
         self.DataBase = ConexaoBD().get_instance()
 
-    def salvar(self, borda):
-        if borda.id is None:
+    def salvar(self, massa):
+        if massa.id is None:
             cursor = self.DataBase.cursor()
-            cursor.execute(self._INSERT_INTO, (borda.tipo))
+            cursor.execute(self._INSERT_INTO, (massa.tipo))
             id = cursor.fetchone()[0]
             self.DataBase.commit()
             cursor.close()
-            borda.id = id
-            return borda
+            massa.id = id
+            return massa
         else:
-            raise Exception('Erro: Não é possivel salvar a tipo de borda')
+            raise Exception('Erro: Não é possivel salvar a tipo de massa')
 
     def get_all(self):
-        bordas = []
+        massas = []
         cursor = self.DataBase.cursor()
         cursor.execute(self._SELECT_ALL)
-        all_bordas = cursor.fetchall()
+        all_massas = cursor.fetchall()
         columns_name = [desc[0] for desc in cursor.description]
-        for borda_query in all_bordas:
-            data = dict(zip(columns_name, borda_query))
-            borda = Bordas(**data)
-            bordas.append(borda)
+        for massa_query in all_massas:
+            data = dict(zip(columns_name, massa_query))
+            massa = Massas(**data)
+            massas.append(massa)
         cursor.close()
-        return bordas
+        return massas
 
     def get_by_tipo(self, tipo):
         cursor = self.DataBase.cursor()
         cursor.execute(self._SELECT_BY_TIPO.format(self._TABLE_NAME, tipo))
         columns_name = [desc[0] for desc in cursor.description]
-        borda = cursor.fetchone()
-        if not borda:
+        massa = cursor.fetchone()
+        if not massa:
             return None
         data = dict(zip(columns_name, add_pizza()))
-        borda = Bordas(**data)
+        massa = Massas(**data)
         cursor.close()
-        return borda
+        return massa
 
     def get_by_id(self, id):
         cursor = self.DataBase.cursor()
         cursor.execute(self._SELECT_BY_ID.format(self._TABLE_NAME, id))
         columns_name = [desc[0] for desc in cursor.description]
-        borda = cursor.fetchone()
-        if not borda:
+        massa = cursor.fetchone()
+        if not massa:
             return None
-        data = dict(zip(columns_name, borda))
-        borda = Bordas(**data)
+        data = dict(zip(columns_name, massa))
+        massa = Massas(**data)
         cursor.close()
-        return borda
+        return massa
 
-    def delete_Borda(self, id):
+    def delete_Massa(self, id):
         cursor = self.DataBase.cursor()
         cursor.execute(self._DELETE.format(self._TABLE_NAME, id))
         self.DataBase.commit()
         cursor.close()
 
-    def update_Borda(self, bordaNew, bordaOld):
+    def update_Massa(self, massaNew, massaOld):
         cursor = self.DataBase.cursor()
         cursor.execute(self._UPDATE.format(self._TABLE_NAME,
-                                           'tipo', bordaNew.tipo,
-                                           bordaOld.id))
+                                           'tipo', massaNew.tipo,
+                                           massaOld.id))
         self.DataBase.commit()
         cursor.close()

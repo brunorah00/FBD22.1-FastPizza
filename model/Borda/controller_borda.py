@@ -8,7 +8,7 @@ app_name = 'bordas'
 dao_borda = BordaDao()
 
 @app_borda.route(f'/{app_name}/', methods=['GET'])
-def get_bordass():
+def get_bordas():
     bordas = dao_borda.get_all()
     data = [borda.get_data_dict() for borda in bordas]
     return make_response(jsonify(data))
@@ -36,17 +36,17 @@ def add_borda():
         return make_response('Borda já existe!', 400)
 
     borda = Bordas(**data)
-    ambulancia = dao_borda.salvar(borda)
+    borda = dao_borda.salvar(borda)
     return make_response({
         'id': borda.id,
         'tipo': borda.tipo,
     })
 
 @app_borda.route(f'/{app_name}/<int:id>', methods=['GET'])
-def get_ambulancia_by_id(id):
+def get_borda_by_id(id):
     borda = dao_borda.get_by_id(id)
     if not borda:
-        return make_response({'Erro': 'Ambulância não encontrada'}, 404)
+        return make_response({'Erro': 'Borda não encontrada'}, 404)
     data = borda.get_data_dict()
     return make_response(jsonify(data))
 

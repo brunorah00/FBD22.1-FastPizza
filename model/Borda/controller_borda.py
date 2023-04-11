@@ -30,7 +30,7 @@ def add_borda():
                 'erros': erros
             }, 400)
 
-    borda = dao_borda.get_by_placa(data.get('tipo'))
+    borda = dao_borda.get_by_tipo(data.get('tipo'))
 
     if borda:
         return make_response('Borda já existe!', 400)

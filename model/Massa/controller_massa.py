@@ -30,7 +30,7 @@ def add_massa():
                 'erros': erros
             }, 400)
 
-    massa = dao_massa.get_by_placa(data.get('tipo'))
+    massa = dao_massa.get_by_tipo(data.get('tipo'))
 
     if massa:
         return make_response('Massa já existe!', 400)

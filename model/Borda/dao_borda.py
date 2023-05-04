@@ -1,6 +1,6 @@
 from DataBase.connect import ConexaoBD
 
-from FastPizza.model.Borda.borda import Bordas
+from model.Borda.borda import Bordas
 
 
 class BordaDao:

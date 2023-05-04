@@ -1,7 +1,7 @@
 from flask import Flask,    make_response, jsonify, request, Blueprint
 
-from FastPizza.model.Massa.massa import Massas
-from FastPizza.model.Massa.dao_massa import MassaDao
+from model.Massa.massa import Massas
+from model.Massa.dao_massa import MassaDao
 
 app_massa = Blueprint('massa_blueprint', __name__)
 app_name = 'massas'

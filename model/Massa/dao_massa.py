@@ -1,6 +1,6 @@
 from DataBase.connect import ConexaoBD
 
-from FastPizza.model.Massa.massa import Massas
+from model.Massa.massa import Massas
 
 
 class MassaDao:

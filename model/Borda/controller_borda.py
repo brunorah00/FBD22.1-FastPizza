@@ -1,7 +1,7 @@
 from flask import Flask,    make_response, jsonify, request, Blueprint
 
-from FastPizza.model.Borda.borda import Bordas
-from FastPizza.model.Borda.dao_borda import BordaDao
+from model.Borda.borda import Bordas
+from model.Borda.dao_borda import BordaDao
 
 app_borda = Blueprint('borda_blueprint', __name__)
 app_name = 'bordas'

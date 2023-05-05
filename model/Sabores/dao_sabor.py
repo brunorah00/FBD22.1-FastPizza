@@ -1,7 +1,6 @@
-from DataBase.connect import ConexaoBD
 
 from model.Sabores.sabor import Sabores
-
+from utils.database import ConnectSingletonDB
 
 class SaborDao:
     _TABLE_NAME = 'SABORES'
@@ -15,7 +14,7 @@ class SaborDao:
     _UPDATE = "UPDATE {} SET {}='{}', {}='{}' WHERE ID={}"
 
     def __init__(self):
-        self.DataBase = ConexaoBD().get_instance()
+        self.DataBase = ConnectSingletonDB().get_instance()
 
     def salvar(self, sabor):
         if sabor.id is None:
@@ -49,7 +48,7 @@ class SaborDao:
         sabor = cursor.fetchone()
         if not sabor:
             return None
-        data = dict(zip(columns_name, add_Pizzas()))
+        data = dict(zip(columns_name, name()))
         sabor = Sabores(**data)
         cursor.close()
         return sabor

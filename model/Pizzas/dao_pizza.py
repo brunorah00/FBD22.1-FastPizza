@@ -1,4 +1,4 @@
-from DataBase.connect import ConexaoBD
+from utils.database import ConnectSingletonDB
 
 from model.Pizzas.pizza import Pizzas
 
@@ -13,7 +13,7 @@ class PizzaDao:
     _UPDATE = "UPDATE {} SET {}, {} WHERE ID={}"
 
     def __init__(self):
-        self.DataBase = ConexaoBD().get_instance()
+        self.DataBase = ConnectSingletonDB().get_instance()
 
     def salvar(self, pizza):
         if pizza.id is None:
@@ -47,7 +47,7 @@ class PizzaDao:
         pizza = cursor.fetchone()
         if not pizza:
             return None
-        data = dict(zip(columns_name, pizza))
+        data = dict(zip(columns_name, id))
         pizza = Pizzas(**data)
         cursor.close()
         return pizza

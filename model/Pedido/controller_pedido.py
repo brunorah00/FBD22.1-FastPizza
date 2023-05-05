@@ -1,6 +1,7 @@
-from flask import Flask, make_response, jsonify, request, Blueprint
-from model.Pedido.pedido import Pedido
+from flask import make_response, jsonify, request, Blueprint
+
 from model.Pedido.dao_pedido import PedidoDao
+from model.Pedido.pedido import Pedido
 
 app_pedido = Blueprint('pedido_blueprint', __name__)
 app_name = 'pedidos'

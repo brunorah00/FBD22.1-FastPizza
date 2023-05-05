@@ -1,4 +1,4 @@
-from DataBase.connect import ConexaoBD
+from utils.database import ConnectSingletonDB
 
 from model.Massa.massa import Massas
 
@@ -15,7 +15,7 @@ class MassaDao:
     _UPDATE = "UPDATE {} SET {}='{}', {}='{}' WHERE ID={}"
 
     def __init__(self):
-        self.DataBase = ConexaoBD().get_instance()
+        self.DataBase = ConnectSingletonDB().get_instance()
 
     def salvar(self, massa):
         if massa.id is None:
@@ -49,7 +49,7 @@ class MassaDao:
         massa = cursor.fetchone()
         if not massa:
             return None
-        data = dict(zip(columns_name, add_pizza()))
+        data = dict(zip(columns_name, tipo()))
         massa = Massas(**data)
         cursor.close()
         return massa

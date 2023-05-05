@@ -1,4 +1,4 @@
-from flask import Flask,    make_response, jsonify, request, Blueprint
+from flask import make_response, jsonify, request, Blueprint
 
 from model.Borda.borda import Bordas
 from model.Borda.dao_borda import BordaDao
@@ -7,15 +7,17 @@ app_borda = Blueprint('borda_blueprint', __name__)
 app_name = 'bordas'
 dao_borda = BordaDao()
 
+
 @app_borda.route(f'/{app_name}/', methods=['GET'])
 def get_bordas():
     bordas = dao_borda.get_all()
     data = [borda.get_data_dict() for borda in bordas]
     return make_response(jsonify(data))
 
+
 @app_borda.route(f'/{app_name}/add/', methods=['POST'])
 def add_borda():
-    data = request.form.to_dict(flat=True)
+    data = request.form.to_dict(flat=False)
 
     erros = []
     for key in Bordas.campos_validacao:
@@ -42,6 +44,7 @@ def add_borda():
         'tipo': borda.tipo,
     })
 
+
 @app_borda.route(f'/{app_name}/<int:id>', methods=['GET'])
 def get_borda_by_id(id):
     borda = dao_borda.get_by_id(id)
@@ -49,6 +52,7 @@ def get_borda_by_id(id):
         return make_response({'Erro': 'Borda não encontrada'}, 404)
     data = borda.get_data_dict()
     return make_response(jsonify(data))
+
 
 @app_borda.route(f'/{app_name}/delete/<int:id>', methods=['DELETE'])
 def delete_borda(id):
@@ -59,9 +63,10 @@ def delete_borda(id):
     dao_borda.delete_Borda(id)
     return make_response({'Deletado com sucesso': True})
 
+
 @app_borda.route(f'/{app_name}/update/<int:id>', methods=['PUT'])
 def update_borda(id):
-    data = request.form.to_dict(flat=True)
+    data = request.form.to_dict(flat=False)
     erros = []
 
     for key in Bordas.campos_validacao:

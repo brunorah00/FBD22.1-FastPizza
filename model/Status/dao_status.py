@@ -1,4 +1,4 @@
-from DataBase.connect import ConexaoBD
+from utils.database import ConnectSingletonDB
 
 from model.Status.status import Status
 
@@ -15,7 +15,7 @@ class StatuDao:
     _UPDATE = "UPDATE {} SET {}='{}', {}='{}' WHERE ID={}"
 
     def __init__(self):
-        self.DataBase = ConexaoBD().get_instance()
+        self.DataBase = ConnectSingletonDB().get_instance()
 
     def salvar(self, statu):
         if statu.id is None:
@@ -49,7 +49,7 @@ class StatuDao:
         statu = cursor.fetchone()
         if not statu:
             return None
-        data = dict(zip(columns_name, add_pizza()))
+        data = dict(zip(columns_name, tipo()))
         statu = Status(**data)
         cursor.close()
         return statu

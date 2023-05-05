@@ -1,4 +1,16 @@
 class PedidoDao:
+
+    _TABLE_NAME = 'PEDIDOS'
+
+    _INSERT_INTO = f'INSERT INTO {_TABLE_NAME}(pizza_id)' \
+                   'values(%s, %s) RETURNING id'
+    _SELECT_ALL = f'SELECT * FROM {_TABLE_NAME}'
+    _SELECT_BY_TIPO = "SELECT * FROM {} WHERE TIPO='{}'"
+    _SELECT_BY_ID = 'SELECT * FROM {} WHERE ID={}'
+    _DELETE = 'DELETE FROM {} WHERE ID={}'
+    _UPDATE = "UPDATE {} SET {}='{}', {}='{}' WHERE ID={}"
+
+
     pedidos = []
     last_id = 0
 

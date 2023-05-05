@@ -1,4 +1,4 @@
-from DataBase.connect import ConexaoBD
+from utils.database import ConnectSingletonDB
 
 from model.Borda.borda import Bordas
 
@@ -15,12 +15,12 @@ class BordaDao:
     _UPDATE = "UPDATE {} SET {}='{}', {}='{}' WHERE ID={}"
 
     def __init__(self):
-        self.DataBase = ConexaoBD().get_instance()
+        self.DataBase = ConnectSingletonDB().get_instance()
 
     def salvar(self, borda):
         if borda.id is None:
             cursor = self.DataBase.cursor()
-            cursor.execute(self._INSERT_INTO, (borda.tipo))
+            cursor.execute(self._INSERT_INTO, borda.tipo)
             id = cursor.fetchone()[0]
             self.DataBase.commit()
             cursor.close()
@@ -49,7 +49,7 @@ class BordaDao:
         borda = cursor.fetchone()
         if not borda:
             return None
-        data = dict(zip(columns_name, add_pizza()))
+        data = dict(zip(columns_name, borda))
         borda = Bordas(**data)
         cursor.close()
         return borda
